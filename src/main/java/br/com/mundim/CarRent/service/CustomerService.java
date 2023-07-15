@@ -39,6 +39,13 @@ public class CustomerService {
         return customer;
     }
 
+    public Customer findByCpf(String cpf) {
+        Customer customer = customerRepository.findByCpf(cpf);
+        if(customer == null)
+            throw new BadRequestException(CUSTOMER_NOT_FOUND_BY_CPF.params(cpf).getMessage());
+        return customer;
+    }
+
     public List<Customer> findAll() {
         return customerRepository.findAll();
     }

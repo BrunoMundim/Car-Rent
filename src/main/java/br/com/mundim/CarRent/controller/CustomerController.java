@@ -37,8 +37,14 @@ public class CustomerController {
 
     @GetMapping("find-by-email")
     @Operation(tags = "Customer", summary = "Find a Customer by Email")
-    public ResponseEntity<Customer> findById(@RequestParam String email) {
+    public ResponseEntity<Customer> findByEmail(@RequestParam String email) {
         return ResponseEntity.ok(customerService.findByEmail(email));
+    }
+
+    @GetMapping("find-by-cpf")
+    @Operation(tags = "Customer", summary = "Find a Customer by CPF")
+    public ResponseEntity<Customer> findByCpf(@RequestParam String cpf) {
+        return ResponseEntity.ok(customerService.findByCpf(cpf));
     }
 
     @GetMapping("/find-all")
