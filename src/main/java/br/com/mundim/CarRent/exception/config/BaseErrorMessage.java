@@ -14,6 +14,8 @@ public class BaseErrorMessage {
     public static final BaseErrorMessage NULL_FIELD = new BaseErrorMessage("nullField");
     public static final BaseErrorMessage CUSTOMER_NOT_FOUND_BY_ID = new BaseErrorMessage("customerNotFoundById");
     public static final BaseErrorMessage CUSTOMER_NOT_FOUND_BY_EMAIL = new BaseErrorMessage("customerNotFoundByEmail");
+    public static final BaseErrorMessage CAR_NOT_FOUND_BY_ID = new BaseErrorMessage("carNotFoundById");
+    public static final BaseErrorMessage CAR_NOT_FOUND_BY_PLATE = new BaseErrorMessage("carNotFoundByPlate");
 
     private final String key;
     private String[] params;

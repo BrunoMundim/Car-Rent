@@ -64,8 +64,14 @@ public class ApiExceptionHandler {
     public ResponseEntity<ApiException> handlePSQLException(DataIntegrityViolationException e) {
         HttpStatus badRequest = HttpStatus.BAD_REQUEST;
 
+        String message = "";
+        if(e.getMessage().contains("plate"))
+            message = "Plate already in use";
+        if(e.getMessage().contains("email"))
+            message = "Email already in use";
+
         ApiException apiException = new ApiException(
-                "Email already in use.",
+                message,
                 HttpStatus.BAD_REQUEST,
                 new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(Calendar.getInstance().getTime())
         );
