@@ -5,6 +5,8 @@ import br.com.mundim.CarRent.model.entity.Car;
 import br.com.mundim.CarRent.service.CarService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,44 +22,44 @@ public class CarController {
 
     @PostMapping
     @Operation(tags = "Car", summary = "Create a Car")
-    public Car create(@RequestBody CarDTO dto) {
-        return carService.create(dto);
+    public ResponseEntity<Car> create(@RequestBody CarDTO dto) {
+        return new ResponseEntity<>(carService.create(dto), HttpStatus.CREATED);
     }
 
     @GetMapping("find-by-id")
     @Operation(tags = "Car", summary = "Find Car by ID")
-    public Car findById(@RequestParam Long id) {
-        return carService.findById(id);
+    public ResponseEntity<Car> findById(@RequestParam Long id) {
+        return ResponseEntity.ok(carService.findById(id));
     }
 
     @GetMapping("find-by-plate")
     @Operation(tags = "Car", summary = "Find Car by Plate")
-    public Car findByPlate(@RequestParam String plate) {
-        return carService.findByPlate(plate);
+    public ResponseEntity<Car> findByPlate(@RequestParam String plate) {
+        return ResponseEntity.ok(carService.findByPlate(plate));
     }
 
     @PutMapping("update-by-id")
     @Operation(tags = "Car", summary = "Update Car by ID")
-    public Car updateById(@RequestParam Long id, @RequestBody CarDTO dto) {
-        return carService.updateById(id, dto);
+    public ResponseEntity<Car> updateById(@RequestParam Long id, @RequestBody CarDTO dto) {
+        return ResponseEntity.ok(carService.updateById(id, dto));
     }
 
     @PutMapping("update-by-plate")
     @Operation(tags = "Car", summary = "Update Car by Plate")
-    public Car updateByPlate(@RequestParam String plate, @RequestBody CarDTO dto) {
-        return carService.updateByPlate(plate, dto);
+    public ResponseEntity<Car> updateByPlate(@RequestParam String plate, @RequestBody CarDTO dto) {
+        return ResponseEntity.ok(carService.updateByPlate(plate, dto));
     }
 
     @DeleteMapping("delete-by-id")
     @Operation(tags = "Car", summary = "Delete Car by ID")
-    public Car deleteById(@RequestParam Long id) {
-        return carService.deleteById(id);
+    public ResponseEntity<Car> deleteById(@RequestParam Long id) {
+        return ResponseEntity.ok(carService.deleteById(id));
     }
 
     @DeleteMapping("delete-by-plate")
     @Operation(tags = "Car", summary = "Delete Car by Plate")
-    public Car deleteByPlate(@RequestParam String plate) {
-        return carService.deleteByPlate(plate);
+    public ResponseEntity<Car> deleteByPlate(@RequestParam String plate) {
+        return ResponseEntity.ok(carService.deleteByPlate(plate));
     }
 
 }

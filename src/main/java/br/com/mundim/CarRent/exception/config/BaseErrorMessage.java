@@ -16,6 +16,10 @@ public class BaseErrorMessage {
     public static final BaseErrorMessage CUSTOMER_NOT_FOUND_BY_EMAIL = new BaseErrorMessage("customerNotFoundByEmail");
     public static final BaseErrorMessage CAR_NOT_FOUND_BY_ID = new BaseErrorMessage("carNotFoundById");
     public static final BaseErrorMessage CAR_NOT_FOUND_BY_PLATE = new BaseErrorMessage("carNotFoundByPlate");
+    public static final BaseErrorMessage RENT_NOT_FOUND_BY_ID = new BaseErrorMessage("rentNotFoundById");
+    public static final BaseErrorMessage UNAVAILABLE_CAR = new BaseErrorMessage("unavailableCar");
+    public static final BaseErrorMessage RENT_CANNOT_CHANGE_BECAUSE_CAR_ALREADY_RETURNED = new BaseErrorMessage("rentCannotChangeBecauseCarAlreadyReturned");
+    public static final BaseErrorMessage CANNOT_DELETE_RENTED_CAR = new BaseErrorMessage("cannotDeleteRentedCar");
 
     private final String key;
     private String[] params;

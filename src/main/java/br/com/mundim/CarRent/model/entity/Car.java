@@ -21,7 +21,7 @@ import static br.com.mundim.CarRent.model.entity.Car.Availability.AVAILABLE;
 @Builder
 public class Car {
 
-    enum Availability {
+    public enum Availability {
         AVAILABLE,
         UNAVAILABLE
     }
