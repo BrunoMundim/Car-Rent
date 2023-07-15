@@ -29,10 +29,16 @@ public class CustomerController {
         return new ResponseEntity<>(customerService.create(dto), HttpStatus.CREATED);
     }
 
-    @GetMapping
+    @GetMapping("find-by-id")
     @Operation(tags = "Customer", summary = "Find a Customer by ID")
     public ResponseEntity<Customer> findById(@RequestParam Long id) {
         return ResponseEntity.ok(customerService.findById(id));
+    }
+
+    @GetMapping("find-by-email")
+    @Operation(tags = "Customer", summary = "Find a Customer by Email")
+    public ResponseEntity<Customer> findById(@RequestParam String email) {
+        return ResponseEntity.ok(customerService.findByEmail(email));
     }
 
     @GetMapping("/find-all")

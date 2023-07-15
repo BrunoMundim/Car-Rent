@@ -29,7 +29,14 @@ public class CustomerService {
 
     public Customer findById(Long id) {
         return customerRepository.findById(id)
-                .orElseThrow(() -> new BadRequestException(CUSTOMER_NOT_FOUND.params(id.toString()).getMessage()));
+                .orElseThrow(() -> new BadRequestException(CUSTOMER_NOT_FOUND_BY_ID.params(id.toString()).getMessage()));
+    }
+
+    public Customer findByEmail(String email) {
+        Customer customer = customerRepository.findByEmail(email);
+        if(customer == null)
+            throw new BadRequestException(CUSTOMER_NOT_FOUND_BY_EMAIL.params(email).getMessage());
+        return customer;
     }
 
     public List<Customer> findAll() {
