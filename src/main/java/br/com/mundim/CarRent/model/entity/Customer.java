@@ -25,6 +25,7 @@ public class Customer {
     private Long id;
     @NotEmpty(message = "Field 'name' must not be empty.")
     private String name;
+    @Column(unique = true)
     @Email(message = "Field 'email' must be a well-formed email address.")
     private String email;
     @CPF(message = "Field 'cpf' must be a well-formed CPF.")
