@@ -42,6 +42,24 @@ public class CarService {
         return car;
     }
 
+    public List<Car> findByBrand(String brand) {
+        List<Car> cars = carRepository.findByBrand(brand);
+        if(cars.size() == 0)
+            throw new BadRequestException(NO_CAR_LOCATED_BRAND.params(brand).getMessage());
+        return cars;
+    }
+
+    public List<Car> findByModel(String model) {
+        List<Car> cars = carRepository.findByModel(model);
+        if(cars.size() == 0)
+            throw new BadRequestException(NO_CAR_LOCATED_MODEL.params(model).getMessage());
+        return cars;
+    }
+
+    public List<Car> findAll() {
+        return carRepository.findAll();
+    }
+
     public Car updateById(Long id, CarDTO dto) {
         Car car = findById(id);
         updateCar(car, dto);

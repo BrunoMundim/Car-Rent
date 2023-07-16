@@ -19,6 +19,9 @@ public class BaseErrorMessage {
     public static final BaseErrorMessage CAR_NOT_FOUND_BY_PLATE = new BaseErrorMessage("carNotFoundByPlate");
     public static final BaseErrorMessage RENT_NOT_FOUND_BY_ID = new BaseErrorMessage("rentNotFoundById");
     public static final BaseErrorMessage UNAVAILABLE_CAR = new BaseErrorMessage("unavailableCar");
+    public static final BaseErrorMessage NO_CAR_LOCATED_BRAND = new BaseErrorMessage("noLocatedBrand");
+    public static final BaseErrorMessage NO_CAR_LOCATED_MODEL = new BaseErrorMessage("noLocatedModel");
+    public static final BaseErrorMessage RETURN_DAY_BEFORE_RENT_DAY = new BaseErrorMessage("returnDayBeforeRentDay");
     public static final BaseErrorMessage RENT_CANNOT_CHANGE_BECAUSE_CAR_ALREADY_RETURNED = new BaseErrorMessage("rentCannotChangeBecauseCarAlreadyReturned");
     public static final BaseErrorMessage CANNOT_DELETE_RENTED_CAR = new BaseErrorMessage("cannotDeleteRentedCar");
 

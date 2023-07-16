@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -39,6 +40,7 @@ public class RentService {
     public Rent create(RentDTO dto){
         verifyCustomerExists(dto.customerId());
         verifyAvailabilityCar(dto.carId());
+        verifyRentDayBeforeReturnDay(dto.rentDay(), dto.returnDay());
         carService.setCarAvailability(dto.carId(), UNAVAILABLE);
         return rentRepository.save(new Rent(dto));
     }
@@ -68,6 +70,7 @@ public class RentService {
 
     public Rent returnCar(Long rentId) {
         Rent rent = findById(rentId);
+        verifyRentDayBeforeReturnDay(rent.getRentDay(), LocalDateTime.now());
         // Resolving car
         Car car = carService.findById(rent.getCarId());
         car.setAvailability(AVAILABLE);
@@ -133,8 +136,13 @@ public class RentService {
 
     private void setRentReturnStatus(Rent rent) {
         rent.setReturnStatus(RETURNED);
-        if(rent.getReturnDay().isBefore(LocalDateTime.now())){
+        LocalDate returnDay = rent.getReturnDay().toLocalDate();
+        if(returnDay.isBefore(LocalDate.now())){
             rent.setReturnStatus(LATE_RETURN);
+            rent.setReturnDay(LocalDateTime.now());
+        }
+        if(returnDay.isAfter(LocalDate.now())){
+            rent.setReturnStatus(EARLY_RETURN);
             rent.setReturnDay(LocalDateTime.now());
         }
     }
@@ -154,5 +162,10 @@ public class RentService {
         long totalDays = totalMinutes/1440;
         if(totalMinutes%1440 > 0) totalDays++;
         return totalDays;
+    }
+
+    private void verifyRentDayBeforeReturnDay(LocalDateTime rentDay, LocalDateTime returnDay) {
+        if(rentDay.isAfter(returnDay))
+            throw new BadRequestException(RETURN_DAY_BEFORE_RENT_DAY.getMessage());
     }
 }

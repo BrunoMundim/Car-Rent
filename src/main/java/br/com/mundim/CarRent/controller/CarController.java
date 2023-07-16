@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/car")
 @SecurityRequirement(name = "jwt")
@@ -38,6 +40,24 @@ public class CarController {
     @Operation(tags = "Car", summary = "Find Car by Plate")
     public ResponseEntity<Car> findByPlate(@RequestParam String plate) {
         return ResponseEntity.ok(carService.findByPlate(plate));
+    }
+
+    @GetMapping("find-all")
+    @Operation(tags = "Car", summary = "Find all Cars")
+    public ResponseEntity<List<Car>> findAll() {
+        return ResponseEntity.ok(carService.findAll());
+    }
+
+    @GetMapping("find-by-brand")
+    @Operation(tags = "Car", summary = "Find Cars by Brand")
+    public ResponseEntity<List<Car>> findByBrand(@RequestParam String brand) {
+        return ResponseEntity.ok(carService.findByBrand(brand));
+    }
+
+    @GetMapping("find-by-model")
+    @Operation(tags = "Car", summary = "Find Cars by Model")
+    public ResponseEntity<List<Car>> findByModel(@RequestParam String model) {
+        return ResponseEntity.ok(carService.findByModel(model));
     }
 
     @PutMapping("update-by-id")

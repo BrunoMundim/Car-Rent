@@ -26,7 +26,8 @@ public class Rent {
     public enum ReturnStatus {
         NOT_RETURNED,
         RETURNED,
-        LATE_RETURN
+        LATE_RETURN,
+        EARLY_RETURN
     }
 
     @Id
