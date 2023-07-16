@@ -39,7 +39,7 @@ public class Car {
     private String model;
     @NotNull(message = "Year must not be null")
     @Min(value = 1, message = "Year must be greater than 0.")
-    private Integer year;
+    private Integer carYear;
     @NotEmpty(message = "Color must not be empty")
     private String color;
     private Availability availability;
@@ -51,7 +51,7 @@ public class Car {
         this.plate = dto.plate();
         this.brand = dto.brand();
         this.model = dto.model();
-        this.year = dto.year();
+        this.carYear = dto.carYear();
         this.color = dto.color();
         this.rentalRatePerDay = dto.rentalRatePerDay();
         this.availability = AVAILABLE;

@@ -76,11 +76,10 @@ public class CarService {
         car.setPlate(dto.plate());
         car.setBrand(dto.brand());
         car.setModel(dto.model());
-        car.setYear(dto.year());
+        car.setCarYear(dto.carYear());
         car.setColor(dto.color());
         car.setRentalRatePerDay(dto.rentalRatePerDay());
     }
-
 
     public Car deleteById(Long carId) {
         if(carIsRented(carId))
