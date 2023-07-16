@@ -1,0 +1,12 @@
+package br.com.mundim.CarRent.repository;
+
+import br.com.mundim.CarRent.model.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository extends JpaRepository<User, Long> {
+
+    User findByEmail(String email);
+
+    User findByCpf(String cpf);
+
+}

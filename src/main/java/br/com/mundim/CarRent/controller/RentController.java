@@ -4,6 +4,7 @@ import br.com.mundim.CarRent.model.dto.RentDTO;
 import br.com.mundim.CarRent.model.entity.Rent;
 import br.com.mundim.CarRent.service.RentService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/rent")
+@SecurityRequirement(name = "jwt")
 public class RentController {
 
     private final RentService rentService;

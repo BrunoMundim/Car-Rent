@@ -2,6 +2,7 @@ package br.com.mundim.CarRent.exception.config;
 
 import br.com.mundim.CarRent.exception.BadRequestException;
 import br.com.mundim.CarRent.exception.NullFieldException;
+import br.com.mundim.CarRent.exception.UnauthorizedRequestException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -77,6 +78,19 @@ public class ApiExceptionHandler {
         );
 
         return new ResponseEntity<>(apiException, badRequest);
+    }
+
+    @ExceptionHandler(value = {UnauthorizedRequestException.class})
+    public ResponseEntity<Object> handleUnauthorizedRequestException(UnauthorizedRequestException e){
+        HttpStatus unauthorized = HttpStatus.UNAUTHORIZED;
+
+        ApiException apiException = new ApiException(
+                e.getMessage(),
+                unauthorized,
+                new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(Calendar.getInstance().getTime())
+        );
+
+        return new ResponseEntity<>(apiException, unauthorized);
     }
 
 }

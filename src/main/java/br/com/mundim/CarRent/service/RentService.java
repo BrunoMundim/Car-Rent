@@ -26,14 +26,14 @@ public class RentService {
     private final RentRepository rentRepository;
     private final CarService carService;
     private final CarRepository carRepository;
-    private final CustomerService customerService;
+    private final UserService userService;
 
     @Autowired
-    public RentService(RentRepository rentRepository, CarService carService, CarRepository carRepository, CustomerService customerService) {
+    public RentService(RentRepository rentRepository, CarService carService, CarRepository carRepository, UserService userService) {
         this.rentRepository = rentRepository;
         this.carService = carService;
         this.carRepository = carRepository;
-        this.customerService = customerService;
+        this.userService = userService;
     }
 
     public Rent create(RentDTO dto){
@@ -49,7 +49,7 @@ public class RentService {
     }
 
     public List<Rent> findByCustomerId(Long customerId){
-        customerService.findById(customerId);
+        userService.findById(customerId);
         return rentRepository.findRentsByCustomerId(customerId);
     }
 
@@ -121,7 +121,7 @@ public class RentService {
     }
 
     private void verifyCustomerExists(Long customerId){
-        customerService.findById(customerId);
+        userService.findById(customerId);
     }
 
     private void verifyAvailabilityCar(Long carId) {

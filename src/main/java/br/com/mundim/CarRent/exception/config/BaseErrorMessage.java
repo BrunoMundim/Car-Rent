@@ -11,7 +11,7 @@ public class BaseErrorMessage {
 
     private final String DEFAULT_RESOURCE = "messages";
 
-    public static final BaseErrorMessage NULL_FIELD = new BaseErrorMessage("nullField");
+    public static final BaseErrorMessage UNAUTHORIZED_USER = new BaseErrorMessage("unauthorizedUser");
     public static final BaseErrorMessage CUSTOMER_NOT_FOUND_BY_ID = new BaseErrorMessage("customerNotFoundById");
     public static final BaseErrorMessage CUSTOMER_NOT_FOUND_BY_EMAIL = new BaseErrorMessage("customerNotFoundByEmail");
     public static final BaseErrorMessage CUSTOMER_NOT_FOUND_BY_CPF = new BaseErrorMessage("customerNotFoundByCpf");
