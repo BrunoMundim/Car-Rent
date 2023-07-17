@@ -52,7 +52,7 @@ public class UserController {
 
     @GetMapping("/find-all")
     @RolesAllowed("ADMIN")
-    @Operation(tags = "User", summary = "Find all Users")
+    @Operation(tags = "User", summary = "Find all Users (ADMIN ONLY)")
     public ResponseEntity<List<User>> findAll() {
         return ResponseEntity.ok(userService.findAll());
     }

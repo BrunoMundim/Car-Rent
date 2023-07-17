@@ -45,7 +45,7 @@ public class RentController {
 
     @GetMapping("find-by-car-id")
     @RolesAllowed("ADMIN")
-    @Operation(tags = "Rent", summary = "Find Rents by Car Id")
+    @Operation(tags = "Rent", summary = "Find Rents by Car Id (ADMIN ONLY)")
     public ResponseEntity<List<Rent>> findByCarId(@RequestParam Long carId) {
         return ResponseEntity.ok(rentService.findByCarId(carId));
     }

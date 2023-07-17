@@ -52,6 +52,9 @@ public class RentServiceTest {
     @Mock
     private AuthenticationService authenticationService;
 
+    @Mock
+    private RentMailService rentMailService;
+
     @InjectMocks
     private RentService rentService;
 
@@ -97,7 +100,7 @@ public class RentServiceTest {
         assertThat(createdRent.getRentDay().toLocalDate()).isEqualTo(rentDTO.rentDay().toLocalDate());
         assertThat(createdRent.getReturnDay().toLocalDate()).isEqualTo(rentDTO.returnDay().toLocalDate());
         assertThat(createdRent.getReturnStatus()).isEqualTo(NOT_RETURNED);
-        assertThat(createdRent.getTotalValue()).isEqualTo(0.0);
+        assertThat(createdRent.getTotalValue()).isEqualTo(319.8);
     }
 
     @Test
