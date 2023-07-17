@@ -41,7 +41,7 @@ public class MailService {
             context.setVariable("data", data);
 
             String htmlContent = templateEngine.process(templateName, context);
-            helper.setText(htmlContent);
+            helper.setText(htmlContent, true);
 
             mailSender.send(message);
             saveMailInDatabase(to, subject, htmlContent);

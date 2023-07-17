@@ -9,6 +9,7 @@ import br.com.mundim.CarRent.repository.CarRepository;
 import br.com.mundim.CarRent.repository.RentRepository;
 import br.com.mundim.CarRent.security.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -31,14 +32,23 @@ public class RentService {
     private final CarRepository carRepository;
     private final UserService userService;
     private final AuthenticationService authenticationService;
+    private final RentMailService rentMailService;
 
     @Autowired
-    public RentService(RentRepository rentRepository, CarService carService, CarRepository carRepository, UserService userService, AuthenticationService authenticationService) {
+    public RentService(
+            RentRepository rentRepository,
+            CarService carService,
+            CarRepository carRepository,
+            UserService userService,
+            AuthenticationService authenticationService,
+            @Lazy RentMailService rentMailService
+    ) {
         this.rentRepository = rentRepository;
         this.carService = carService;
         this.carRepository = carRepository;
         this.userService = userService;
         this.authenticationService = authenticationService;
+        this.rentMailService = rentMailService;
     }
 
     public Rent create(RentDTO dto) {
@@ -46,7 +56,10 @@ public class RentService {
         verifyAvailabilityCar(dto.carId());
         verifyRentDayIsBeforeReturnDay(dto.rentDay(), dto.returnDay());
         carService.setCarAvailability(dto.carId(), UNAVAILABLE);
-        return rentRepository.save(new Rent(dto));
+        Rent rent = rentRepository.save(new Rent(dto));
+        setRentTotalValue(rent);
+        rentMailService.sucessfullRentMail(rent);
+        return rent;
     }
 
     public Rent findById(Long id) {
@@ -77,6 +90,7 @@ public class RentService {
         // Resolving Total Value: In the actual scenario, the client pays the whole price, even if returned earlier, and pays 20% delay fine
         setRentReturnStatus(rent);
         setRentTotalValue(rent);
+        rentMailService.sucessfullReturnMail(rent);
         return rentRepository.save(rent);
     }
 

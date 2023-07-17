@@ -17,8 +17,10 @@ public class Mail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "email_to")
     private String to;
     private String subject;
+    @Column(name = "html_mail_content", length = 30000)
     private String htmlMailContent;
     private LocalDateTime timeStamp;
 
