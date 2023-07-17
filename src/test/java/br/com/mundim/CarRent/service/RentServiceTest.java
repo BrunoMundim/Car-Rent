@@ -1,7 +1,6 @@
 package br.com.mundim.CarRent.service;
 
 import br.com.mundim.CarRent.exception.BadRequestException;
-import br.com.mundim.CarRent.exception.config.BaseErrorMessage;
 import br.com.mundim.CarRent.model.dto.RentDTO;
 import br.com.mundim.CarRent.model.entity.Car;
 import br.com.mundim.CarRent.model.entity.Rent;
@@ -129,7 +128,7 @@ public class RentServiceTest {
     @Test
     public void findByCustomerId_shouldReturnTwoFoundRent() {
         List<Rent> rents = List.of(rent, rent2);
-        when(rentRepository.findRentsByCustomerId(Mockito.any(Long.class))).thenReturn(rents);
+        when(rentRepository.findRentsByUserId(Mockito.any(Long.class))).thenReturn(rents);
 
         List<Rent> foundRent = rentService.findByCustomerId(rent.getUserId());
 

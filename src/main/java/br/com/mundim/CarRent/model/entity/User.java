@@ -60,6 +60,10 @@ public class User implements UserDetails {
         this.password = passwordEncoder().encode(dto.password());
     }
 
+    public void setPassword(String password) {
+        this.password = passwordEncoder().encode(password);
+    }
+
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(this.role));
     }

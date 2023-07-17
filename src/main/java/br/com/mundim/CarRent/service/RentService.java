@@ -52,7 +52,7 @@ public class RentService {
 
     public List<Rent> findByCustomerId(Long customerId){
         userService.findById(customerId);
-        return rentRepository.findRentsByCustomerId(customerId);
+        return rentRepository.findRentsByUserId(customerId);
     }
 
     public List<Rent> findByCarId(Long carId){

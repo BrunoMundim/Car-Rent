@@ -59,7 +59,7 @@ public class RentRepositoryTest {
         rentRepository.save(rent);
         rentRepository.save(rent2);
 
-        List<Rent> rentList = rentRepository.findRentsByCustomerId(rent.getUserId());
+        List<Rent> rentList = rentRepository.findRentsByUserId(rent.getUserId());
 
         assertThat(rentList).isNotNull();
         assertThat(rentList.size()).isEqualTo(2);
@@ -70,7 +70,7 @@ public class RentRepositoryTest {
         rentRepository.save(rent);
         rentRepository.save(rent2);
 
-        List<Rent> rentList = rentRepository.findRentsByCustomerId(rent.getCarId());
+        List<Rent> rentList = rentRepository.findRentsByUserId(rent.getCarId());
 
         assertThat(rentList).isNotNull();
         assertThat(rentList.size()).isEqualTo(2);
