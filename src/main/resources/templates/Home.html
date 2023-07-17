@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Car Rent</title>
+
+    <style type="text/css">
+        body {
+            background-color: #0D1117;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            font-size: 18px;
+            color: #E6E9EC;
+        }
+        #wrapper {
+            padding: 10px;
+            width: 700px;
+        }
+        button {
+            background-color: #E6E9EC;
+            height: 40px;
+            font-size: 18px;
+            width: 30%;
+            margin: 0 auto;
+            display: block;
+            color: #0D1117;
+        }
+        h1 {
+            text-align: center;
+        }
+    </style>
+
+
+</head>
+<body>
+    <div id="wrapper">
+        <h1>12 Week Method</h1>
+        <h2>Descrição</h2>
+        <p>Car Rent é uma API para controle de aluguel de veículos, ela permite listar veículos, para que usuários façam suas contas e aluguem carros.</p>
+        <h2>Funcionalidades</h2>
+        <ul>
+            <li>Cadastro usuários</li>
+            <li>Cadastro de veículos e listagem por: Marca, Modelo e listar todos.</li>
+            <li>Aluguel de veículos e devoluções, mantendo no banco de dados o estado atual dos veículos.</li>
+            <li>Envio de emails confirmando aluguel e devolução.</li>
+        </ul>
+
+        <button id="myButton" class="float-left submit-button">Acessar documentação</button>
+    
+        <script type="text/javascript">
+            document.getElementById("myButton").onclick = function () {
+                location.href = "/swagger-ui/index.html#/";
+            };
+        </script>
+    
+        <h3>Tecnologias utilizadas</h3>
+    
+        <ul>
+            <li>Java</li>
+            <li>Spring Boot</li>
+            <li>Spring Data JPA</li>
+            <li>Spring Security</li>
+            <li>PostgreSQL</li>
+            <li>JUnit</li>
+        </ul>
+    </div>
+</body>
+</html>
