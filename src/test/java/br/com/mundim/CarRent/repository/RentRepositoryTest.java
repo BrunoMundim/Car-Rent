@@ -11,7 +11,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
@@ -27,11 +26,11 @@ public class RentRepositoryTest {
     @BeforeEach
     public void setup() {
         rent = Rent.builder()
-                .customerId(1L).carId(1L).rentDay(LocalDateTime.now())
+                .userId(1L).carId(1L).rentDay(LocalDateTime.now())
                 .returnDay(LocalDateTime.now().plusDays(2))
                 .build();
         rent2 = Rent.builder()
-                .customerId(1L).carId(1L).rentDay(LocalDateTime.now())
+                .userId(1L).carId(1L).rentDay(LocalDateTime.now())
                 .returnDay(LocalDateTime.now().plusDays(2))
                 .build();
     }
@@ -60,7 +59,7 @@ public class RentRepositoryTest {
         rentRepository.save(rent);
         rentRepository.save(rent2);
 
-        List<Rent> rentList = rentRepository.findRentsByCustomerId(rent.getCustomerId());
+        List<Rent> rentList = rentRepository.findRentsByCustomerId(rent.getUserId());
 
         assertThat(rentList).isNotNull();
         assertThat(rentList.size()).isEqualTo(2);

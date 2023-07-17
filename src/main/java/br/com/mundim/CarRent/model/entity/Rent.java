@@ -3,14 +3,12 @@ package br.com.mundim.CarRent.model.entity;
 import br.com.mundim.CarRent.model.dto.RentDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import static br.com.mundim.CarRent.model.entity.Rent.ReturnStatus.NOT_RETURNED;
@@ -35,7 +33,7 @@ public class Rent {
     private Long id;
     @NotNull
     @Min(value = 1)
-    private Long customerId;
+    private Long userId;
     @NotNull
     @Min(value = 1)
     private Long carId;
@@ -47,7 +45,7 @@ public class Rent {
     private ReturnStatus returnStatus;
 
     public Rent(RentDTO dto) {
-        this.customerId = dto.customerId();
+        this.userId = dto.userId();
         this.carId = dto.carId();
         this.rentDay = dto.rentDay();
         this.returnDay = dto.returnDay();

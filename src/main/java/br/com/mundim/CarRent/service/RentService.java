@@ -38,7 +38,7 @@ public class RentService {
     }
 
     public Rent create(RentDTO dto){
-        verifyCustomerExists(dto.customerId());
+        verifyCustomerExists(dto.userId());
         verifyAvailabilityCar(dto.carId());
         verifyRentDayBeforeReturnDay(dto.rentDay(), dto.returnDay());
         carService.setCarAvailability(dto.carId(), UNAVAILABLE);
@@ -60,14 +60,6 @@ public class RentService {
         return rentRepository.findRentsByCarId(carId);
     }
 
-    public Rent delete(Long id) {
-        Rent rent = findById(id);
-        if(rent.getReturnStatus().equals(NOT_RETURNED))
-            returnCar(id);
-        rentRepository.deleteById(rent.getId());
-        return rent;
-    }
-
     public Rent returnCar(Long rentId) {
         Rent rent = findById(rentId);
         verifyRentDayBeforeReturnDay(rent.getRentDay(), LocalDateTime.now());
@@ -82,18 +74,24 @@ public class RentService {
     }
 
     public Rent update(Long id, RentDTO dto) {
+        verifyCustomerExists(dto.userId());
+        verifyAvailabilityCar(dto.carId());
         Rent rent = findById(id);
         if(rent.getReturnStatus() != NOT_RETURNED)
             throw new BadRequestException(RENT_CANNOT_CHANGE_BECAUSE_CAR_ALREADY_RETURNED.getMessage());
-        if(dto.carId() != null)
-            changeRentedCar(id, dto.carId());
-        if(dto.customerId() != null)
-            changeCustomerWhoRented(id, dto.customerId());
-        if(dto.rentDay() != null)
-            changeRentDay(id, dto.rentDay());
-        if(dto.returnDay() != null)
-            changeReturnDay(id, dto.returnDay());
+        changeRentedCar(id, dto.carId());
+        changeCustomerWhoRented(id, dto.userId());
+        changeRentDay(id, dto.rentDay());
+        changeReturnDay(id, dto.returnDay());
         return rentRepository.save(rent);
+    }
+
+    public Rent delete(Long id) {
+        Rent rent = findById(id);
+        if(rent.getReturnStatus().equals(NOT_RETURNED))
+            returnCar(id);
+        rentRepository.deleteById(rent.getId());
+        return rent;
     }
 
     private void changeRentedCar(Long rentId, Long newCarId) {
@@ -107,7 +105,7 @@ public class RentService {
     private void changeCustomerWhoRented(Long rentId, Long newCustomerId){
         Rent rent = findById(rentId);
         verifyCustomerExists(newCustomerId);
-        rent.setCustomerId(newCustomerId);
+        rent.setUserId(newCustomerId);
         rentRepository.save(rent);
     }
 
@@ -161,6 +159,7 @@ public class RentService {
         long totalMinutes = Duration.between(rent.getRentDay(), rent.getReturnDay()).toMinutes();
         long totalDays = totalMinutes/1440;
         if(totalMinutes%1440 > 0) totalDays++;
+        if(totalDays == 0) totalDays++;
         return totalDays;
     }
 
