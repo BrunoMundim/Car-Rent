@@ -5,6 +5,7 @@ import br.com.mundim.CarRent.model.entity.Car;
 import br.com.mundim.CarRent.service.CarService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,7 @@ public class CarController {
     }
 
     @PostMapping
+    @RolesAllowed("ADMIN")
     @Operation(tags = "Car", summary = "Create a Car")
     public ResponseEntity<Car> create(@RequestBody CarDTO dto) {
         return new ResponseEntity<>(carService.create(dto), HttpStatus.CREATED);
@@ -61,24 +63,28 @@ public class CarController {
     }
 
     @PutMapping("update-by-id")
+    @RolesAllowed("ADMIN")
     @Operation(tags = "Car", summary = "Update Car by ID")
     public ResponseEntity<Car> updateById(@RequestParam Long id, @RequestBody CarDTO dto) {
         return ResponseEntity.ok(carService.updateById(id, dto));
     }
 
     @PutMapping("update-by-plate")
+    @RolesAllowed("ADMIN")
     @Operation(tags = "Car", summary = "Update Car by Plate")
     public ResponseEntity<Car> updateByPlate(@RequestParam String plate, @RequestBody CarDTO dto) {
         return ResponseEntity.ok(carService.updateByPlate(plate, dto));
     }
 
     @DeleteMapping("delete-by-id")
+    @RolesAllowed("ADMIN")
     @Operation(tags = "Car", summary = "Delete Car by ID")
     public ResponseEntity<Car> deleteById(@RequestParam Long id) {
         return ResponseEntity.ok(carService.deleteById(id));
     }
 
     @DeleteMapping("delete-by-plate")
+    @RolesAllowed("ADMIN")
     @Operation(tags = "Car", summary = "Delete Car by Plate")
     public ResponseEntity<Car> deleteByPlate(@RequestParam String plate) {
         return ResponseEntity.ok(carService.deleteByPlate(plate));
