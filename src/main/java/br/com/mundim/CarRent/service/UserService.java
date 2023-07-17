@@ -21,13 +21,17 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
     @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     public User create(UserDTO dto) {
-        User user = new User(dto);
         return userRepository.save(new User(dto));
     }
 
@@ -60,6 +64,7 @@ public class UserService {
         user.setEmail(dto.email());
         user.setCpf(dto.cpf());
         user.setContacts(dto.contacts());
+        user.setPassword(passwordEncoder().encode(dto.password()));
         return userRepository.save(user);
     }
 
