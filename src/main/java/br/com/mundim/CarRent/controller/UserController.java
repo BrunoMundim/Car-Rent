@@ -5,6 +5,7 @@ import br.com.mundim.CarRent.model.entity.User;
 import br.com.mundim.CarRent.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,6 +51,7 @@ public class UserController {
     }
 
     @GetMapping("/find-all")
+    @RolesAllowed("ADMIN")
     @Operation(tags = "User", summary = "Find all Users")
     public ResponseEntity<List<User>> findAll() {
         return ResponseEntity.ok(userService.findAll());

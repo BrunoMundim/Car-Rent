@@ -26,7 +26,6 @@ public class AuthenticationService implements UserDetailsService{
         return userRepository.findByEmail(email);
     }
 
-    // TODO: Criar UnauthorizedRequestException
     public boolean verifyUserAuthentication(User user) {
         User loggedUser = findUserByBearer();
         if(!loggedUser.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))

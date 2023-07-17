@@ -3,6 +3,7 @@ package br.com.mundim.CarRent.service;
 import br.com.mundim.CarRent.model.dto.UserDTO;
 import br.com.mundim.CarRent.model.entity.User;
 import br.com.mundim.CarRent.repository.UserRepository;
+import br.com.mundim.CarRent.security.AuthenticationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,6 +26,9 @@ public class UserServiceTest {
 
     @Mock
     private UserRepository userRepository;
+
+    @Mock
+    private AuthenticationService authenticationService;
 
     @InjectMocks
     private UserService userService;
@@ -66,6 +70,7 @@ public class UserServiceTest {
 
     @Test
     public void findById_shouldReturnFoundUser() {
+        when(authenticationService.verifyUserAuthentication(Mockito.any(User.class))).thenReturn(true);
         when(userRepository.findById(Mockito.any(Long.class))).thenReturn(Optional.ofNullable(user));
 
         User foundUser = userService.findById(user.getId());
@@ -76,6 +81,7 @@ public class UserServiceTest {
 
     @Test
     public void findByEmail_shouldReturnFoundUser() {
+        when(authenticationService.verifyUserAuthentication(Mockito.any(User.class))).thenReturn(true);
         when(userRepository.findByEmail(Mockito.any(String.class))).thenReturn(user);
 
         User foundUser = userService.findByEmail(user.getEmail());
@@ -86,6 +92,7 @@ public class UserServiceTest {
 
     @Test
     public void findByCpf_shouldReturnFoundUser() {
+        when(authenticationService.verifyUserAuthentication(Mockito.any(User.class))).thenReturn(true);
         when(userRepository.findByCpf(Mockito.any(String.class))).thenReturn(user);
 
         User foundUser = userService.findByCpf(user.getCpf());
@@ -111,6 +118,7 @@ public class UserServiceTest {
                 .name("Victor Elias").email("elias@email.com").cpf("826.011.260-43")
                 .password("new password").contacts(List.of("34343434"))
                 .build();
+        when(authenticationService.verifyUserAuthentication(Mockito.any(User.class))).thenReturn(true);
         when(userRepository.findById(Mockito.any(Long.class))).thenReturn(Optional.ofNullable(user));
         when(userRepository.save(Mockito.any(User.class))).thenReturn(user);
 
@@ -125,6 +133,7 @@ public class UserServiceTest {
 
     @Test
     public void deleteById_shouldReturnDeletedUser() {
+        when(authenticationService.verifyUserAuthentication(Mockito.any(User.class))).thenReturn(true);
         when(userRepository.findById(user.getId())).thenReturn(Optional.ofNullable(user));
 
         User deletedUser = userService.deleteById(user.getId());
