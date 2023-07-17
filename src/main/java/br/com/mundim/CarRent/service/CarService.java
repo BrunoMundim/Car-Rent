@@ -91,10 +91,7 @@ public class CarService {
 
     public Car deleteByPlate(String plate) {
         Car car = findByPlate(plate);
-        if(carIsRented(car.getId()))
-            throw new BadRequestException(CANNOT_DELETE_RENTED_CAR.params(car.getId().toString()).getMessage());
-        carRepository.deleteById(car.getId());
-        return car;
+        return deleteById(car.getId());
     }
 
     public void setCarAvailability(Long carId, Car.Availability availability) {
