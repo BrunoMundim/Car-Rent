@@ -5,6 +5,7 @@ import br.com.mundim.CarRent.model.entity.Rent;
 import br.com.mundim.CarRent.service.RentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,10 +40,11 @@ public class RentController {
     @GetMapping("find-by-customer-id")
     @Operation(tags = "Rent", summary = "Find Rents by Customer Id")
     public ResponseEntity<List<Rent>> findByCustomerId(@RequestParam Long customerId) {
-        return ResponseEntity.ok(rentService.findByCustomerId(customerId));
+        return ResponseEntity.ok(rentService.findByUserId(customerId));
     }
 
     @GetMapping("find-by-car-id")
+    @RolesAllowed("ADMIN")
     @Operation(tags = "Rent", summary = "Find Rents by Car Id")
     public ResponseEntity<List<Rent>> findByCarId(@RequestParam Long carId) {
         return ResponseEntity.ok(rentService.findByCarId(carId));

@@ -7,6 +7,7 @@ import br.com.mundim.CarRent.model.entity.Rent;
 import br.com.mundim.CarRent.model.entity.User;
 import br.com.mundim.CarRent.repository.CarRepository;
 import br.com.mundim.CarRent.repository.RentRepository;
+import br.com.mundim.CarRent.security.AuthenticationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -48,6 +49,9 @@ public class RentServiceTest {
     @Mock
     private CarRepository carRepository;
 
+    @Mock
+    private AuthenticationService authenticationService;
+
     @InjectMocks
     private RentService rentService;
 
@@ -80,6 +84,7 @@ public class RentServiceTest {
 
     @Test
     public void create_shouldReturnCreatedRent() {
+        when(authenticationService.verifyUserAuthentication(Mockito.any(User.class))).thenReturn(true);
         when(rentRepository.save(Mockito.any(Rent.class))).thenReturn(rent);
         when(userService.findById(Mockito.any(Long.class))).thenReturn(user);
         when(carService.findById(Mockito.any(Long.class))).thenReturn(car);
@@ -97,6 +102,8 @@ public class RentServiceTest {
 
     @Test
     public void create_shouldThrowUnavailableCar() {
+        when(userService.findById(Mockito.any(Long.class))).thenReturn(user);
+        when(authenticationService.verifyUserAuthentication(Mockito.any(User.class))).thenReturn(true);
         car.setAvailability(UNAVAILABLE);
         when(carService.findById(Mockito.any(Long.class))).thenReturn(car);
 
@@ -108,6 +115,8 @@ public class RentServiceTest {
 
     @Test
     public void findById_shouldReturnFoundRent() {
+        when(userService.findById(Mockito.any(Long.class))).thenReturn(user);
+        when(authenticationService.verifyUserAuthentication(Mockito.any(User.class))).thenReturn(true);
         when(rentRepository.findById(Mockito.any(Long.class))).thenReturn(Optional.ofNullable(rent));
 
         Rent foundRent = rentService.findById(rent.getId());
@@ -126,11 +135,13 @@ public class RentServiceTest {
     }
 
     @Test
-    public void findByCustomerId_shouldReturnTwoFoundRent() {
+    public void findByUserId_shouldReturnTwoFoundRent() {
+        when(userService.findById(Mockito.any(Long.class))).thenReturn(user);
+        when(authenticationService.verifyUserAuthentication(Mockito.any(User.class))).thenReturn(true);
         List<Rent> rents = List.of(rent, rent2);
         when(rentRepository.findRentsByUserId(Mockito.any(Long.class))).thenReturn(rents);
 
-        List<Rent> foundRent = rentService.findByCustomerId(rent.getUserId());
+        List<Rent> foundRent = rentService.findByUserId(rent.getUserId());
 
         assertThat(foundRent).isEqualTo(rents);
         assertThat(foundRent.size()).isEqualTo(2);
@@ -155,6 +166,8 @@ public class RentServiceTest {
                 .totalValue(0.0)
                 .build();
         car.setAvailability(UNAVAILABLE); // Setting car as rented
+        when(userService.findById(Mockito.any(Long.class))).thenReturn(user);
+        when(authenticationService.verifyUserAuthentication(Mockito.any(User.class))).thenReturn(true);
         when(rentRepository.findById(Mockito.any(Long.class))).thenReturn(Optional.ofNullable(rent));
         when(rentRepository.save(Mockito.any(Rent.class))).thenReturn(rent);
         when(carService.findById(Mockito.any(Long.class))).thenReturn(car);
@@ -175,6 +188,8 @@ public class RentServiceTest {
                 .totalValue(0.0)
                 .build();
         car.setAvailability(UNAVAILABLE); // Setting car as rented
+        when(userService.findById(Mockito.any(Long.class))).thenReturn(user);
+        when(authenticationService.verifyUserAuthentication(Mockito.any(User.class))).thenReturn(true);
         when(rentRepository.findById(Mockito.any(Long.class))).thenReturn(Optional.ofNullable(rent));
         when(rentRepository.save(Mockito.any(Rent.class))).thenReturn(rent);
         when(carService.findById(Mockito.any(Long.class))).thenReturn(car);
@@ -195,6 +210,8 @@ public class RentServiceTest {
                 .totalValue(0.0)
                 .build();
         car.setAvailability(UNAVAILABLE); // Setting car as rented
+        when(userService.findById(Mockito.any(Long.class))).thenReturn(user);
+        when(authenticationService.verifyUserAuthentication(Mockito.any(User.class))).thenReturn(true);
         when(rentRepository.findById(Mockito.any(Long.class))).thenReturn(Optional.ofNullable(rent));
         when(rentRepository.save(Mockito.any(Rent.class))).thenReturn(rent);
         when(carService.findById(Mockito.any(Long.class))).thenReturn(car);
@@ -222,6 +239,7 @@ public class RentServiceTest {
                 .userId(2L).carId(2L).rentDay(LocalDateTime.now())
                 .returnDay(LocalDateTime.now().plusDays(2))
                 .build();
+        when(authenticationService.verifyUserAuthentication(Mockito.any(User.class))).thenReturn(true);
         when(rentRepository.findById(Mockito.any(Long.class))).thenReturn(Optional.ofNullable(rent));
         when(rentRepository.save(Mockito.any(Rent.class))).thenReturn(rent);
         when(carService.findById(Mockito.any(Long.class))).thenReturn(newCar);
@@ -245,6 +263,8 @@ public class RentServiceTest {
                 .userId(2L).carId(2L).rentDay(LocalDateTime.now())
                 .returnDay(LocalDateTime.now().plusDays(2))
                 .build();
+        when(userService.findById(Mockito.any(Long.class))).thenReturn(user);
+        when(authenticationService.verifyUserAuthentication(Mockito.any(User.class))).thenReturn(true);
         when(carService.findById(Mockito.any(Long.class))).thenReturn(newCar);
 
         Throwable throwable = catchThrowable(() -> rentService.update(rent.getId(), updateRentDTO));
@@ -269,6 +289,8 @@ public class RentServiceTest {
                 .userId(2L).carId(2L).rentDay(LocalDateTime.now())
                 .returnDay(LocalDateTime.now().plusDays(2))
                 .build();
+        when(userService.findById(Mockito.any(Long.class))).thenReturn(user);
+        when(authenticationService.verifyUserAuthentication(Mockito.any(User.class))).thenReturn(true);
         when(carService.findById(Mockito.any(Long.class))).thenReturn(newCar);
         when(userService.findById(Mockito.any(Long.class))).thenReturn(newUser);
         when(rentRepository.findById(Mockito.any(Long.class))).thenReturn(Optional.ofNullable(rent));
@@ -287,6 +309,8 @@ public class RentServiceTest {
                 .totalValue(0.0)
                 .build();
         car.setAvailability(UNAVAILABLE); // Setting car as rented
+        when(userService.findById(Mockito.any(Long.class))).thenReturn(user);
+        when(authenticationService.verifyUserAuthentication(Mockito.any(User.class))).thenReturn(true);
         when(rentRepository.findById(Mockito.any(Long.class))).thenReturn(Optional.ofNullable(rent));
         when(rentRepository.save(Mockito.any(Rent.class))).thenReturn(rent);
         when(carService.findById(Mockito.any(Long.class))).thenReturn(car);
